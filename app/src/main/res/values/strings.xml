@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">SideIndexBar</string>
+
+    <string-array name="list">
+        <item>aaa</item>
+        <item>aaa</item>
+        <item>aa</item>
+        <item>a</item>
+        <item>bbb</item>
+        <item>bbb</item>
+        <item>bb</item>
+        <item>b</item>
+        <item>ccc</item>
+        <item>ccc</item>
+        <item>cc</item>
+        <item>c</item>
+        <item>ddd</item>
+        <item>ddd</item>
+        <item>dd</item>
+        <item>d</item>
+        <item>eee</item>
+        <item>eee</item>
+        <item>ee</item>
+        <item>e</item>
+        <item>fff</item>
+        <item>fff</item>
+        <item>ff</item>
+        <item>f</item>
+    </string-array>
+</resources>

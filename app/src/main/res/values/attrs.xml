@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="SideIndexBar">
+        <attr name="letterSize" format="dimension"/>
+        <attr name="letterColor" format="color"/>
+        <attr name="selectLetterColor" format="color"/>
+        <attr name="selectBackground" format="reference|color"/>
+        <attr name="isBoldface" format="boolean"/>
+        <attr name="isLetterCenter" format="boolean"/>
+    </declare-styleable>
+</resources>
