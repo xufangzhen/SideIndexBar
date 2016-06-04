@@ -9,7 +9,6 @@ import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
@@ -35,13 +34,13 @@ public class SideIndexBar extends View {
 	//选中时的背景
 	Drawable mSelectBackground;
 
-	private int width;//宽
+	private int width;//宽度
 	private int height;//去除padding后的高度
 	private int mChoose = -1;// 选中的字母是第几个
 	private Paint mPaint;//画笔0
 	private TextView mTextDialog;//可以设置一个显示当前索引字母的对话框
 	private String mLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ#";//默认字符
-	private OnLetterChangedListener mLetterChangedListener;// 触摸事件
+	private OnLetterChangedListener mLetterChangedListener;// 触摸字母改变事件
 
 	public SideIndexBar(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
@@ -125,17 +124,15 @@ public class SideIndexBar extends View {
 				}
 				setBackground(mBackground);
 			default:
-				if (oldChoose != mChoose) {
-					if (mChoose >= 0 && mChoose < mLetters.length()) {
-						if (mLetterChangedListener != null) {
-							mLetterChangedListener.onChanged(mLetters.substring(mChoose, mChoose + 1), mChoose);
-						}
-						if (mTextDialog != null) {
-							mTextDialog.setText(mLetters.substring(mChoose, mChoose + 1));
-							mTextDialog.setVisibility(View.VISIBLE);
-						}
-						setBackground(mSelectBackground);
+				if (oldChoose != mChoose && mChoose != -1) {
+					if (mLetterChangedListener != null) {
+						mLetterChangedListener.onChanged(mLetters.substring(mChoose, mChoose + 1), mChoose);
 					}
+					if (mTextDialog != null) {
+						mTextDialog.setText(mLetters.substring(mChoose, mChoose + 1));
+						mTextDialog.setVisibility(View.VISIBLE);
+					}
+					setBackground(mSelectBackground);
 				}
 		}
 		invalidate();
