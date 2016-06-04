@@ -34,8 +34,8 @@ public class SideIndexBar extends View {
 	//选中时的背景
 	Drawable mSelectBackground;
 
-	private int width;//宽度
-	private int height;//去除padding后的高度
+	private int mWidth;//宽度
+	private int mHeight;//去除padding后的高度
 	private int mChoose = -1;// 选中的字母是第几个
 	private Paint mPaint;//画笔0
 	private TextView mTextDialog;//可以设置一个显示当前索引字母的对话框
@@ -59,13 +59,18 @@ public class SideIndexBar extends View {
 
 	private void init(Context context, AttributeSet attrs) {
 		if (context != null && attrs != null) {
-			TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.SideIndexBar, 0, 0);
-			mLetterSize = a.getDimension(R.styleable.SideIndexBar_letterSize, mLetterSize);
-			mLetterColor = a.getColor(R.styleable.SideIndexBar_letterColor, mLetterColor);
-			mSelectLetterColor = a.getColor(R.styleable.SideIndexBar_selectLetterColor, mSelectLetterColor);
+			TypedArray a = context.obtainStyledAttributes(attrs, R.styleable
+					.SideIndexBar, 0, 0);
+			mLetterSize = a.getDimension(R.styleable.SideIndexBar_letterSize,
+					mLetterSize);
+			mLetterColor = a.getColor(R.styleable.SideIndexBar_letterColor,
+					mLetterColor);
+			mSelectLetterColor = a.getColor(R.styleable.SideIndexBar_selectLetterColor,
+					mSelectLetterColor);
 			mSelectBackground = a.getDrawable(R.styleable.SideIndexBar_selectBackground);
 			mIsBoldface = a.getBoolean(R.styleable.SideIndexBar_isBoldface, mIsBoldface);
-			mIsLetterCenter = a.getBoolean(R.styleable.SideIndexBar_isLetterCenter, mIsLetterCenter);
+			mIsLetterCenter = a.getBoolean(R.styleable.SideIndexBar_isLetterCenter,
+					mIsLetterCenter);
 			a.recycle();
 		}
 
@@ -88,8 +93,8 @@ public class SideIndexBar extends View {
 	@Override
 	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
 		super.onSizeChanged(w, h, oldw, oldh);
-		height = h - getPaddingTop() - getPaddingBottom();
-		width = w;
+		mHeight = h - getPaddingTop() - getPaddingBottom();
+		mWidth = w;
 	}
 
 	@Override
@@ -99,8 +104,9 @@ public class SideIndexBar extends View {
 			float letterWidth = mPaint.measureText(letter);
 			mPaint.setColor(i == mChoose ? mSelectLetterColor : mLetterColor);
 			// 计算（x,y），默认是该字母的左下角坐标
-			float xPos = mIsLetterCenter ? (width - letterWidth) / 2 : getPaddingLeft() + (mLetterSize - letterWidth) / 2;
-			float yPos = height / mLetters.length() * (i + 1) + getPaddingTop();
+			float xPos = mIsLetterCenter ? (mWidth - letterWidth) / 2 : getPaddingLeft()
+					+ (mLetterSize - letterWidth) / 2;
+			float yPos = mHeight / mLetters.length() * (i + 1) + getPaddingTop();
 			canvas.drawText(letter, xPos, yPos, mPaint);
 		}
 		super.onDraw(canvas);
@@ -111,10 +117,11 @@ public class SideIndexBar extends View {
 	public boolean dispatchTouchEvent(MotionEvent event) {
 		float y = event.getY();// 点击y坐标
 		int oldChoose = mChoose;
-		if (y < getPaddingTop() || y > height + getPaddingTop()) {
+		if (y < getPaddingTop() || y > mHeight + getPaddingTop()) {
 			mChoose = -1;
 		} else {
-			mChoose = (int) ((y - getPaddingTop()) / height * mLetters.length());// 点击y坐标所占总高度的比例*b数组的长度就等于点击b中的个数.
+			// 点击y坐标所占总高度的比例*b数组的长度就等于点击b中的个数.
+			mChoose = (int) ((y - getPaddingTop()) / mHeight * mLetters.length());
 		}
 		switch (event.getAction()) {
 			case MotionEvent.ACTION_UP:
@@ -126,7 +133,8 @@ public class SideIndexBar extends View {
 			default:
 				if (oldChoose != mChoose && mChoose != -1) {
 					if (mLetterChangedListener != null) {
-						mLetterChangedListener.onChanged(mLetters.substring(mChoose, mChoose + 1), mChoose);
+						mLetterChangedListener.onChanged(mLetters.substring(mChoose,
+								mChoose + 1), mChoose);
 					}
 					if (mTextDialog != null) {
 						mTextDialog.setText(mLetters.substring(mChoose, mChoose + 1));
@@ -139,8 +147,9 @@ public class SideIndexBar extends View {
 		return super.dispatchTouchEvent(event);
 	}
 
-	//设置触摸选中的字母发生改变的接口
-	public void setOnLetterChangedListener(OnLetterChangedListener letterChangedListener) {
+	//设置接口
+	public void setOnLetterChangedListener(OnLetterChangedListener
+												   letterChangedListener) {
 		mLetterChangedListener = letterChangedListener;
 	}
 
