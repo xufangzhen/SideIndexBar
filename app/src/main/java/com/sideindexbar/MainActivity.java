@@ -20,7 +20,7 @@ public class MainActivity extends Activity {
 
 		SideIndexBar indexBar = (SideIndexBar) findViewById(R.id.index_bar);
 		indexBar.setLetters("ABCDEFHIJKLMOPQSTUVXYZ#");
-		indexBar.setTextView(mText);
+		indexBar.setTextDialog(mText);
 		indexBar.setOnLetterChangedListener(new SideIndexBar.OnLetterChangedListener() {
 			@Override
 			public void onChanged(String s, int position) {

@@ -81,7 +81,7 @@ public class SideIndexBar extends View {
 		this.mLetters = letters;
 	}
 
-	public void setTextView(TextView textDialog) {
+	public void setTextDialog(TextView textDialog) {
 		this.mTextDialog = textDialog;
 	}
 
